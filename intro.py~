@@ -1,0 +1,3 @@
+from webmap.mapper import *
+
+print map_website("http://schools.nyc.gov/default.htm",4)
