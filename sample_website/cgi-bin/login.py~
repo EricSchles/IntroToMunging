@@ -1,0 +1,44 @@
+#! /usr/bin/python
+import sqlite3
+import cgi,cgitb
+
+#cgitb.enable() enables debugging
+#cgitb.enable()
+login = cgi.FieldStorage()
+
+user = login.getvalue("username")
+password = login.getvalue("password")
+conn = sqlite3.connect('participants.db')
+
+with open(".security","r") as f:
+	name = f.readline().strip("\n")
+	word = f.readline().strip("\n")
+
+if user == name and word == password:
+
+	c = conn.cursor()
+
+	c.execute('SELECT * FROM participants')
+
+	listing = c.fetchall()
+	print 'Content-Type: text/html'
+	print
+	print '<html>'
+	print '<head><title>Thanks for submitting!</title></head>'
+	print '<body>'
+	for i in listing:
+		print '<p> %s </p>' % str(i)
+	print '</body>'
+	print '</html>'
+
+	conn.close()
+else:
+	print 'Content-Type: text/html'
+        print
+        print '<html>'
+        print '<head><title>Thanks for submitting!</title></head>'
+        print '<body>'
+        print '<p>incorrect credentials, this incident will be reported</p>'
+	print '</body>'
+        print '</html>'
+
