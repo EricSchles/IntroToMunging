@@ -1,0 +1,3 @@
+lxml demo.ipynb
+requests demo.ipynb
+-start up simple webserver
